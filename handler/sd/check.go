@@ -46,7 +46,7 @@ func DiskCheck(c *gin.Context) {
 		status = http.StatusTooManyRequests
 		text = "WARNING"
 	}
-	message := fmt.Sprintf("$%s - Free space: %dMB (%dGB) / %dMB (%dGB) | Used: %f", text, usedMB, usedGB, totalMB, totalGB, usedPercent)
+	message := fmt.Sprintf("$%s - Free space: %dMB (%dGB) / %dMB (%dGB) | Used: %f%%", text, usedMB, usedGB, totalMB, totalGB, usedPercent)
 	c.String(status, "\n"+message)
 }
 
@@ -70,7 +70,7 @@ func CPUCheck(c *gin.Context) {
 		status = http.StatusTooManyRequests
 		text = "WARNING"
 	}
-	message := fmt.Sprintf("%s - Load average: %.2f, %.2f,%.2f  | Cores: %d", text, l1, l5, l15, cores)
+	message := fmt.Sprintf("%s - Load average: %.2f, %.2f,%.2f  | Cores: %d%%", text, l1, l5, l15, cores)
 	c.String(status, "\n"+message)
 
 }
@@ -94,6 +94,6 @@ func RAMCheck(c *gin.Context) {
 		status = http.StatusTooManyRequests
 		text = "WARNING"
 	}
-	message := fmt.Sprintf("$%s - Free space: %dMB (%dGB) / %dMB (%dGB) | Used: %f", text, usedMB, usedGB, totalMB, totalGB, usedPercent)
+	message := fmt.Sprintf("$%s - Free space: %dMB (%dGB) / %dMB (%dGB) | Used: %f%%", text, usedMB, usedGB, totalMB, totalGB, usedPercent)
 	c.String(status, "\n"+message)
 }

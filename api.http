@@ -1,0 +1,7 @@
+@host = http://127.0.0.1:8080
+
+# health 健康检查
+GET {{host}}/sd/health
+
+# 获取硬盘使用情况
+GET {{host}}/sd/disk
