@@ -1,0 +1,11 @@
+# debug release test
+runmode: debug
+# 端口
+addr: :8888
+# server 的名称
+name: go-restful-api-server
+
+# pingServer 的请求地址
+ping_url: http://127.0.0.1:8888
+# pingServer 尝试的次数
+max_ping_count: 10
