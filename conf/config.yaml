@@ -1,5 +1,5 @@
 # debug release test
-runmode: debug
+runmode: test
 # 端口
 addr: :8888
 # server 的名称
@@ -9,3 +9,13 @@ name: go-restful-api-server
 ping_url: http://127.0.0.1:8888
 # pingServer 尝试的次数
 max_ping_count: 10
+
+# 日志配置
+log:
+  writers: file,stdout
+  logger_level: DEBUG
+  logger_file: log/server.log
+  log_format_text: false
+  rollingPolicy: daily
+  log_rotate_date: 1
+  log_backup_count: 4

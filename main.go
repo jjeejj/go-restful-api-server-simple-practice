@@ -3,7 +3,9 @@ package main
 import (
 	"errors"
 	"go-restful-api-server-simple-practice/router"
-	"log"
+
+	"github.com/lexkong/log"
+
 	"net/http"
 	"time"
 
@@ -25,6 +27,10 @@ func main() {
 	if err := config.Init(*cfg); err != nil {
 		panic(err)
 	}
+	// for {
+	// 	fmt.Println(viper.GetString("runmode"))
+	// 	time.Sleep(4 * time.Second)
+	// }
 	gin.SetMode(viper.GetString("runmode"))
 	g := gin.New()
 
@@ -42,11 +48,11 @@ func main() {
 		if err := pingServer(); err != nil {
 			log.Fatal("the server router /sd/health has no response, or ir might took too lang to start up", err)
 		}
-		log.Println("The server has been deployed successfully")
+		log.Info("The server has been deployed successfully")
 	}()
 	addr := viper.GetString("addr")
-	log.Printf("Start to listening the incoming requests on http address: %s", addr)
-	log.Println(http.ListenAndServe(addr, g).Error())
+	log.Infof("Start to listening the incoming requests on http address: %s", addr)
+	log.Info(http.ListenAndServe(addr, g).Error())
 }
 
 // pingServer ping the server to make ture the server is working
@@ -58,7 +64,7 @@ func pingServer() error {
 			return nil
 		}
 		// Sleep Second to contnue the next ping
-		log.Println("Waiting for the server, retry in 1 second")
+		log.Info("Waiting for the server, retry in 1 second")
 		time.Sleep(time.Second)
 	}
 	return errors.New("Cannot connect to the server by /sd/health")
