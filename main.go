@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"go-restful-api-server-simple-practice/model"
 	"go-restful-api-server-simple-practice/router"
 
 	"github.com/lexkong/log"
@@ -32,6 +33,10 @@ func main() {
 	// 	time.Sleep(4 * time.Second)
 	// }
 	gin.SetMode(viper.GetString("runmode"))
+
+	// init db
+	model.DB.Init()
+
 	g := gin.New()
 
 	// middleware

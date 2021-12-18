@@ -19,3 +19,11 @@ log:
   rollingPolicy: daily
   log_rotate_date: 1
   log_backup_count: 4
+
+# Mysl
+mysql:
+  username: "root"
+  password: "123456"
+  database: "dev"
+  host: "127.0.0.1"
+  port: 3306

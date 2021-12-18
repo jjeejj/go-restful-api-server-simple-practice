@@ -9,8 +9,41 @@ import (
 	"github.com/lexkong/log"
 )
 
+// 项目配置
 type Config struct {
-	Name string
+	Name        string
+	ViperConfig *ViperConfig
+}
+
+var C Config
+
+// 配置文件的配置项
+type ViperConfig struct {
+	RunMode      string
+	Addr         string
+	Name         string
+	PingUrl      string
+	MaxPingCount int
+	Log          LogConfg
+	Mysql        MySqlConfig
+}
+
+type LogConfg struct {
+	Writers        string
+	LoggerLevel    string
+	LoggerFile     string
+	LogFormatText  bool
+	RollingPolicy  string
+	LogRotateDate  int
+	LogBackupCount int
+	LogRotateSize  int
+}
+type MySqlConfig struct {
+	Username string
+	Password string
+	Host     string
+	Port     string
+	Database string
 }
 
 // initConfig function init config info
@@ -32,6 +65,9 @@ func (c *Config) initConfig() error {
 	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}
+	if err := viper.Unmarshal(c.ViperConfig); err != nil {
+		log.Fatal("配置文件转换为 结构体失败", err)
+	}
 	return nil
 }
 
@@ -45,28 +81,29 @@ func (c *Config) watchConfig() {
 
 func (c *Config) initLog() {
 	log.InitWithConfig(&log.PassLagerCfg{
-		Writers:        viper.GetString("writers"),
-		LoggerLevel:    viper.GetString("logger_level"),
-		LoggerFile:     viper.GetString("logger_file"),
-		LogFormatText:  viper.GetBool("log_format_text"),
-		LogRotateDate:  viper.GetInt("log_rotate_date"),
-		LogRotateSize:  viper.GetInt("log_rotate_size"),
-		LogBackupCount: viper.GetInt("log_backup_count"),
-		RollingPolicy:  viper.GetString("rollingPolicy"),
+		Writers:        C.ViperConfig.Log.Writers,
+		LoggerLevel:    C.ViperConfig.Log.LoggerLevel,
+		LoggerFile:     C.ViperConfig.Log.LoggerFile,
+		LogFormatText:  C.ViperConfig.Log.LogFormatText,
+		LogRotateDate:  C.ViperConfig.Log.LogRotateDate,
+		LogRotateSize:  C.ViperConfig.Log.LogRotateSize,
+		LogBackupCount: C.ViperConfig.Log.LogBackupCount,
+		RollingPolicy:  C.ViperConfig.Log.RollingPolicy,
 	})
 }
 
 // func init() {}
 
 func Init(cfg string) error {
-	c := Config{
-		Name: cfg,
+	C = Config{
+		Name:        cfg,
+		ViperConfig: &ViperConfig{},
 	}
-	if err := c.initConfig(); err != nil {
+	if err := C.initConfig(); err != nil {
 		return err
 	}
 	// 初始化 日志
-	c.initLog()
-	c.watchConfig()
+	C.initLog()
+	C.watchConfig()
 	return nil
 }
