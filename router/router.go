@@ -2,6 +2,7 @@ package router
 
 import (
 	"go-restful-api-server-simple-practice/handler/sd"
+	"go-restful-api-server-simple-practice/handler/user"
 	"go-restful-api-server-simple-practice/middleware"
 	"net/http"
 
@@ -28,6 +29,11 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		sdR.GET("/disk", sd.DiskCheck)
 		sdR.GET("/cpu", sd.CPUCheck)
 		sdR.GET("/ram", sd.RAMCheck)
+	}
+	// user group
+	u := g.Group("/v1/user")
+	{
+		u.POST("", user.Create)
 	}
 	return g
 }

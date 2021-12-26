@@ -1,3 +1,0 @@
-{"level":"INFO","timestamp":"2021-12-18 23:53:52.738","file":"model/init.go:46","msg":"Database connection success, Dabases info: [root:123456@tcp(127.0.0.1:3306)/dev?charset=utf8mb4\u0026parseTime=true\u0026loc=Local] \n"}
-{"level":"INFO","timestamp":"2021-12-18 23:53:52.738","file":"go-restful-api-server-simple-practice/main.go:59","msg":"Start to listening the incoming requests on http address: :8888"}
-{"level":"INFO","timestamp":"2021-12-18 23:53:52.742","file":"go-restful-api-server-simple-practice/main.go:56","msg":"The server has been deployed successfully"}
