@@ -2,22 +2,28 @@ package user
 
 import (
 	"fmt"
+	"go-restful-api-server-simple-practice/handler"
 	"go-restful-api-server-simple-practice/pkg/errno"
-	"net/http"
 
 	"github.com/lexkong/log"
 
 	"github.com/gin-gonic/gin"
 )
 
+type CreateUserRequest struct {
+	CreateUserResponse
+	Password string `json:"password"`
+}
+
+type CreateUserResponse struct {
+	Username string `json:"username"`
+}
+
 func Create(c *gin.Context) {
-	var r struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
-	}
+	var r CreateUserRequest
 	var err error
 	if err := c.Bind(&r); err != nil {
-		c.JSON(http.StatusOK, gin.H{"code": errno.BindError.Code, "message": errno.BindError.Message})
+		handler.SendResponse(c, errno.BindError, nil)
 		return
 	}
 	log.Debugf("username is : [%s], password is [%s]", r.Username, r.Password)
@@ -31,6 +37,7 @@ func Create(c *gin.Context) {
 	if r.Password == "" {
 		err = fmt.Errorf("password is empty")
 	}
-	code, message := errno.DecodeErr(err)
-	c.JSON(http.StatusOK, gin.H{"code": code, "message": message})
+	handler.SendResponse(c, err, CreateUserResponse{Username: r.Username})
+	// code, message := errno.DecodeErr(err)
+	// c.JSON(http.StatusOK, gin.H{"code": code, "message": message})
 }
