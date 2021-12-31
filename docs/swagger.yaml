@@ -16,12 +16,17 @@ paths:
   /v1/user/:username:
     post:
       consumes:
-      - application/x-www-form-urlencoded
+      - application/json
       description: 创建一个新的用户
       parameters:
+      - description: 创建人
+        in: path
+        name: usernam
+        required: true
+        type: string
       - description: 创建用户
         in: body
-        name: username
+        name: userinfo
         required: true
         schema:
           $ref: '#/definitions/user.CreateUserRequest'

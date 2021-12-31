@@ -27,7 +27,7 @@ var doc = `{
             "post": {
                 "description": "创建一个新的用户",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "tags": [
                     "user"
@@ -35,8 +35,15 @@ var doc = `{
                 "summary": "创建用户",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "创建人",
+                        "name": "usernam",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "创建用户",
-                        "name": "username",
+                        "name": "userinfo",
                         "in": "body",
                         "required": true,
                         "schema": {
