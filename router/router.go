@@ -35,5 +35,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		u.POST("/:username", user.Create)
 	}
+
 	return g
 }

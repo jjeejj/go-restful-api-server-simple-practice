@@ -11,7 +11,7 @@ import (
 )
 
 type CreateUserRequest struct {
-	CreateUserResponse
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
@@ -19,10 +19,19 @@ type CreateUserResponse struct {
 	Username string `json:"username"`
 }
 
+// @Summary 创建用户
+// @Description 创建一个新的用户
+// @Accept x-www-form-urlencoded
+// @Product json
+// @Param username body CreateUserRequest true "创建用户"
+// @Tags user
+// @Router /v1/user/:username [post]
+// @Success 200 {string} json "{"code":0, "data": {}, "message": ""}"
 func Create(c *gin.Context) {
 	var r CreateUserRequest
 	var err error
 	if err := c.Bind(&r); err != nil {
+		log.Errorf(err, "Bind an error")
 		handler.SendResponse(c, errno.BindError, nil)
 		return
 	}
@@ -32,7 +41,7 @@ func Create(c *gin.Context) {
 		log.Errorf(err, "Get an error")
 	}
 	if errno.IsErrUSerNotFound(err) {
-		log.Debug("err type is ErrUSerNotFound")
+		log.Debug("err type is ErrUserNotFound")
 	}
 	if r.Password == "" {
 		err = fmt.Errorf("password is empty")

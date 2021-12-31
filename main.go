@@ -15,6 +15,11 @@ import (
 	"github.com/spf13/viper"
 
 	"go-restful-api-server-simple-practice/config"
+
+	_ "go-restful-api-server-simple-practice/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 var (
@@ -22,6 +27,10 @@ var (
 	cfg = pflag.StringP("config", "c", "", "apiserver config file path")
 )
 
+// @title RsstAPI 练习
+// @version 1.0
+// @description 描述
+// @host 127.0.0.1:8888
 func main() {
 	// init config
 	pflag.Parse()
@@ -41,7 +50,8 @@ func main() {
 
 	// middleware
 	middlewares := []gin.HandlerFunc{}
-
+	// swagger
+	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// routes
 	router.Load(
 		// Cores.

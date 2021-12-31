@@ -1,0 +1,36 @@
+definitions:
+  user.CreateUserRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: 127.0.0.1:8888
+info:
+  contact: {}
+  description: 描述
+  title: RsstAPI 练习
+  version: "1.0"
+paths:
+  /v1/user/:username:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 创建一个新的用户
+      parameters:
+      - description: 创建用户
+        in: body
+        name: username
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateUserRequest'
+      responses:
+        "200":
+          description: '{"code":0, "data": {}, "message": ""}'
+          schema:
+            type: string
+      summary: 创建用户
+      tags:
+      - user
+swagger: "2.0"
